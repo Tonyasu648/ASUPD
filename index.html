@@ -1,25 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tony Lazo's Personal Page</title>
-    <!-- Include Chart.js Library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            background-color: #800000; /* Maroon */
-            color: #800000; /* Maroon text */
-            font-family: Arial, sans-serif;
-        }
-        h1, h2, h3 {
-            color: gold; /* Gold for headers */
-        }
-        .quote {
-            font-style: italic;
-        }
-    </style>
-</head>
 <body>
     <header>
         <h1>Welcome to Tony Lazo's Personal Page</h1>
@@ -33,7 +11,7 @@
         <p class="quote">"Imagine, Create, Innovate!"</p>
     </section>
 
-    <!-- Poll Section -->
+    <!-- Add the poll section here -->
     <section>
         <h2>What's Your Favorite Subject?</h2>
         <form id="pollForm">
@@ -55,8 +33,6 @@
             <button type="button" onclick="submitPoll()">Submit</button>
         </form>
         <h3>Current Poll Results:</h3>
-        <!-- Canvas for the pie chart -->
-        <canvas id="pollChart" width="400" height="400"></canvas>
         <div id="pollResults"></div>
     </section>
 
@@ -73,12 +49,11 @@
         function submitPoll() {
             const form = document.getElementById('pollForm');
             const selectedValue = form.subject.value;
-
+            
             // Update results
             if (selectedValue) {
                 results[selectedValue]++;
                 displayResults();
-                updateChart();
             } else {
                 alert("Please select a subject.");
             }
@@ -94,46 +69,9 @@
                 <p>Other: ${results.Other}</p>
             `;
         }
-
-        // Chart.js setup
-        const ctx = document.getElementById('pollChart').getContext('2d');
-        let pollChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['ELA', 'Math', 'Social Studies', 'Science', 'Other'],
-                datasets: [{
-                    label: 'Poll Results',
-                    data: [0, 0, 0, 0, 0],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 206, 86, 0.6)',
-                        'rgba(75, 192, 192, 0.6)',
-                        'rgba(153, 102, 255, 0.6)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Favorite Subject Poll'
-                    }
-                }
-            }
-        });
-
-        function updateChart() {
-            const totalVotes = Object.values(results).reduce((a, b) => a + b, 0);
-            const percentages = Object.values(results).map(value => (value / totalVotes) * 100 || 0);
-            pollChart.data.datasets[0].data = percentages;
-            pollChart.update();
-        }
     </script>
+</body>
+
 </body>
 </html>
 
