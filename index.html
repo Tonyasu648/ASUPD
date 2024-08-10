@@ -4,121 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tony Lazo's Personal Page</title>
+    <!-- Include Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
             background-color: #800000; /* Maroon */
             color: #800000; /* Maroon text */
-            margin: 0;
-            padding: 20px;
+            font-family: Arial, sans-serif;
         }
-        header {
-            background: #FFD700; /* Gold */
-            color: #800000; /* Maroon for header text */
-            padding: 10px 20px;
-            text-align: center;
-            border-radius: 5px;
-        }
-        section {
-            margin: 20px 0;
-            padding: 20px;
-            background: #fff; /* White for sections */
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            color: #800000; /* Maroon for section text */
-        }
-        h2 {
-            color: #800000; /* Maroon for section headings */
-        }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #800000; /* Maroon for footer text */
-        }
-        .asupd-logo {
-            font-size: 40px; /* Adjust size as needed */
-            font-weight: bold;
+        h1, h2, h3 {
+            color: gold; /* Gold for headers */
         }
         .quote {
             font-style: italic;
-            font-size: 1.2em;
-            margin-top: 10px;
         }
     </style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <header>
+        <h1>Welcome to Tony Lazo's Personal Page</h1>
+        <img src="ASU_logo_color.webp" alt="ASUPD Logo" style="max-width: 200px; margin-bottom: 20px;">
+    </header>
 
-<header>
-    <h1>Welcome to Tony Lazo's Personal Page</h1>
-    <img src="ASU_logo_color.webp" alt="ASUPD Logo" style="max-width: 200px; margin-bottom: 20px;"> <!-- Replace ASUPD text with logo -->
-</header>
+    <section>
+        <h2>About Me</h2>
+        <img src="your-photo-file.jpg" alt="Tony Lazo" style="max-width: 200px; border-radius: 50%; margin-bottom: 20px;">
+        <p>Hello! I'm Tony Lazo, a passionate student at Arizona State University Preparatory Digital...</p>
+        <p class="quote">"Imagine, Create, Innovate!"</p>
+    </section>
 
-<section>
-    <h2>About Me</h2>
-    <img src="Tony.jpg" alt="Tony Lazo" style="max-width: 200px; border-radius: 50%; margin-bottom: 20px;">
-    <p>Hello! I'm Tony Lazo, a passionate student at Arizona State University Preparatory Digital. I believe in the power of innovation and creativity to make my school a better place. With a love for both basketball and animating, I strive to bring a unique blend of energy and creativity to everything I do.</p>
-    <p class="quote">"Imagine, Create, Innovate!"</p>
-</section>
-<section>
-    <h2>What's Your Favorite Subject?</h2>
-    <form id="pollForm">
-        <label>
-            <input type="radio" name="subject" value="ELA"> ELA
-        </label><br>
-        <label>
-            <input type="radio" name="subject" value="Math"> Math
-        </label><br>
-        <label>
-            <input type="radio" name="subject" value="Social Studies"> Social Studies
-        </label><br>
-        <label>
-            <input type="radio" name="subject" value="Science"> Science
-        </label><br>
-        <label>
-            <input type="radio" name="subject" value="Other"> Other
-        </label><br>
-        <button type="button" onclick="submitPoll()">Submit</button>
-    </form>
-    <h3>Current Poll Results:</h3>
-    <div id="pollResults"></div>
-</section>
+    <!-- Poll Section -->
+    <section>
+        <h2>What's Your Favorite Subject?</h2>
+        <form id="pollForm">
+            <label>
+                <input type="radio" name="subject" value="ELA"> ELA
+            </label><br>
+            <label>
+                <input type="radio" name="subject" value="Math"> Math
+            </label><br>
+            <label>
+                <input type="radio" name="subject" value="Social Studies"> Social Studies
+            </label><br>
+            <label>
+                <input type="radio" name="subject" value="Science"> Science
+            </label><br>
+            <label>
+                <input type="radio" name="subject" value="Other"> Other
+            </label><br>
+            <button type="button" onclick="submitPoll()">Submit</button>
+        </form>
+        <h3>Current Poll Results:</h3>
+        <!-- Canvas for the pie chart -->
+        <canvas id="pollChart" width="400" height="400"></canvas>
+        <div id="pollResults"></div>
+    </section>
 
-<script>
-    // Initialize results object
-    const results = {
-        ELA: 0,
-        Math: 0,
-        'Social Studies': 0,
-        Science: 0,
-        Other: 0
-    };
+    <script>
+        // Initialize results object
+        const results = {
+            ELA: 0,
+            Math: 0,
+            'Social Studies': 0,
+            Science: 0,
+            Other: 0
+        };
 
-    function submitPoll() {
-        const form = document.getElementById('pollForm');
-        const selectedValue = form.subject.value;
-        
-        // Update results
-        if (selectedValue) {
-            results[selectedValue]++;
-            displayResults();
-        } else {
-            alert("Please select a subject.");
+        function submitPoll() {
+            const form = document.getElementById('pollForm');
+            const selectedValue = form.subject.value;
+
+            // Update results
+            if (selectedValue) {
+                results[selectedValue]++;
+                displayResults();
+                updateChart();
+            } else {
+                alert("Please select a subject.");
+            }
         }
-    }
 
-    function displayResults() {
-        const resultsDiv = document.getElementById('pollResults');
-        resultsDiv.innerHTML = `
-            <p>ELA: ${results.ELA}</p>
-            <p>Math: ${results.Math}</p>
-            <p>Social Studies: ${results['Social Studies']}</p>
-            <p>Science: ${results.Science}</p>
-            <p>Other: ${results.Other}</p>
-        `;
-    }
-</script>
+        function displayResults() {
+            const resultsDiv = document.getElementById('pollResults');
+            resultsDiv.innerHTML = `
+                <p>ELA: ${results.ELA}</p>
+                <p>Math: ${results.Math}</p>
+                <p>Social Studies: ${results['Social Studies']}</p>
+                <p>Science: ${results.Science}</p>
+                <p>Other: ${results.Other}</p>
+            `;
+        }
+
+        // Chart.js setup
+        const ctx = document.getElementById('pollChart').getContext('2d');
+        let pollChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['ELA', 'Math', 'Social Studies', 'Science', 'Other'],
+                datasets: [{
+                    label: 'Poll Results',
+                    data: [0, 0, 0, 0, 0],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Favorite Subject Poll'
+                    }
+                }
+            }
+        });
+
+        function updateChart() {
+            const totalVotes = Object.values(results).reduce((a, b) => a + b, 0);
+            const percentages = Object.values(results).map(value => (value / totalVotes) * 100 || 0);
+            pollChart.data.datasets[0].data = percentages;
+            pollChart.update();
+        }
+    </script>
+</body>
+</html>
 
 <section>
     <h2>My Interests</h2>
