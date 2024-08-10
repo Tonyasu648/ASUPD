@@ -60,6 +60,64 @@
     <p>Hello! I'm Tony Lazo, a passionate student at Arizona State University Preparatory Digital. I believe in the power of innovation and creativity to make my school a better place. With a love for both basketball and animating, I strive to bring a unique blend of energy and creativity to everything I do.</p>
     <p class="quote">"Imagine, Create, Innovate!"</p>
 </section>
+<section>
+    <h2>What's Your Favorite Subject?</h2>
+    <form id="pollForm">
+        <label>
+            <input type="radio" name="subject" value="ELA"> ELA
+        </label><br>
+        <label>
+            <input type="radio" name="subject" value="Math"> Math
+        </label><br>
+        <label>
+            <input type="radio" name="subject" value="Social Studies"> Social Studies
+        </label><br>
+        <label>
+            <input type="radio" name="subject" value="Science"> Science
+        </label><br>
+        <label>
+            <input type="radio" name="subject" value="Other"> Other
+        </label><br>
+        <button type="button" onclick="submitPoll()">Submit</button>
+    </form>
+    <h3>Current Poll Results:</h3>
+    <div id="pollResults"></div>
+</section>
+
+<script>
+    // Initialize results object
+    const results = {
+        ELA: 0,
+        Math: 0,
+        'Social Studies': 0,
+        Science: 0,
+        Other: 0
+    };
+
+    function submitPoll() {
+        const form = document.getElementById('pollForm');
+        const selectedValue = form.subject.value;
+        
+        // Update results
+        if (selectedValue) {
+            results[selectedValue]++;
+            displayResults();
+        } else {
+            alert("Please select a subject.");
+        }
+    }
+
+    function displayResults() {
+        const resultsDiv = document.getElementById('pollResults');
+        resultsDiv.innerHTML = `
+            <p>ELA: ${results.ELA}</p>
+            <p>Math: ${results.Math}</p>
+            <p>Social Studies: ${results['Social Studies']}</p>
+            <p>Science: ${results.Science}</p>
+            <p>Other: ${results.Other}</p>
+        `;
+    }
+</script>
 
 <section>
     <h2>My Interests</h2>
